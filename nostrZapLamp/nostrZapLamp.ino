@@ -1,14 +1,19 @@
 ///////////////////////////////////////////////////////////////////////////////////
 //         Change these variables directly in the code or use the config         //
-//  form in the web-installer https://lnbits.github.io/nostr-zap-lamp/installer/  //
 ///////////////////////////////////////////////////////////////////////////////////
 
-String version = "0.0.1";
+String version = "0.1";
 
-String config_ssid = "null"; // 'String config_ssid = "config_ssid";' / 'String config_ssid = "null";'
-String config_wifi_password = "null"; // 'String config_wifi_password = "password";' / 'String config_wifi_password = "null";'
-String config_pubkey = "null";
-String config_relay = "null";
+String config_ssid = ""; // 'String config_ssid = "config_ssid";' / 'String config_ssid = "null";'
+String config_wifi_password = ""; // 'String config_wifi_password = "password";' / 'String config_wifi_password = "null";'
+// Override variables with your own values from this config file.
+#include "config.h"
+// Pubkey should be in hex format.
+String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix and Zaplamp
+//String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
+//String config_pubkey = "55f04590674f3648f4cdc9dc8ce32da2a282074cd0b020596ee033d12d385185"; // hex value NoGood
+//String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71, 55f04590674f3648f4cdc9dc8ce32da2a282074cd0b020596ee033d12d385185"; // Sebastix and NoGood
+String config_relay = "nos.lol, nostr.sebastix.dev";
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                 END of variables                              //
@@ -51,7 +56,7 @@ int ledPin = 13; // Pin number where the LED is connected
 extern int buttonPin; // Pin number where the button is connected
 int minFlashDelay = 100; // Minimum delay between flashes (in milliseconds)
 int maxFlashDelay = 5000; // Maximum delay between flashes (in milliseconds)
-int lightBrightness = 20; // The brightness of the LED (0-255)
+int lightBrightness = 50; // The brightness of the LED (0-255)
 
 bool forceConfig = false;
 
@@ -102,7 +107,7 @@ void createZapEventRequest();
 void connectToNostrRelays();
 
 #define BUTTON_PIN 0 // change this to the pin your button is connected to
-#define DOUBLE_TAP_DELAY 250 // delay for double tap in milliseconds
+define DOUBLE_TAP_DELAY 250 // delay for double tap in milliseconds
 
 volatile unsigned long lastButtonPress = 0;
 volatile bool doubleTapDetected = false;
@@ -123,20 +128,20 @@ void lampControlTask(void *pvParameters) {
   for(;;) {
     if(!lastInternetConnectionState) {
       // slow fade pulse of LED
-      for (int i = 100; i < 255; i++) {
+      for (int i = 100; i < 50; i++) {
         analogWrite(ledPin, i); // set the LED to the desired intensity
-        delay(10);  // wait for a moment
+        delay(15);  // wait for a moment
       }
       // now fade out
-      for (int i = 255; i >= 100; i--) {
+      for (int i = 255; i >= 50; i--) {
         analogWrite(ledPin, i); // set the LED bright ness
-        delay(10);  // wait for a moment
+        delay(15);  // wait for a moment
       }
     }
 
     // detect double tap on button
     if (doubleTapDetected) {
-      Serial.println("Double tap detected. REstarting");
+      Serial.println("Double tap detected. Restarting");
       // restart device
       ESP.restart();
     }
@@ -297,25 +302,25 @@ void doLightningFlash(int numberOfFlashes) {
 
     // wait for the specified time, longer for the first flash and shorter for subsequent flashes
     // int flashDuration = 250 / flash * random(1,5);
-    int flashDuration = 250;
-    delay(250);
+    int flashDuration = 500;
+    delay(500);
 
     // fast fade-out
     for (int i = 255; i >= lightBrightness / 3; i = i - 2) {
       analogWrite(ledPin, i);  // set the LED brightness
-      delay(1);  // wait for a moment
+      delay(3);  // wait for a moment
     }
     // analogWrite(ledPin, lightBrightness / 3);
-    delay(250);
+    delay(500);
   }
 
   // fade from lightBrightness / 3 to lightBrightness
   for (int i = lightBrightness / 3; i <= lightBrightness; i = i + 1) {
     analogWrite(ledPin, i); // set the LED brightness
-    delay(1);  // wait for a moment
+    delay(3);  // wait for a moment
   }
 
-  delay(250);
+  delay(500);
 
   // set led to brightness
   analogWrite(ledPin, lightBrightness);
@@ -330,7 +335,7 @@ void flashLightning(int zapAmountSats) {
   int flashCount = 1;
   // set flash count length of the number in the zap amount
   if (zapAmountSats > 0) {
-    flashCount = floor(log10(zapAmountSats)) + 1;
+    flashCount = floor(log10(zapAmountSats)) + 2;
   }
 
   // push to the flash queue
@@ -644,7 +649,7 @@ void setup() {
   readFiles(); // get the saved details and store in global variables
 
   if(triggerConfig == true || config_ssid == "" || config_ssid == "null") {
-    configOverSerialPort();
+    //configOverSerialPort();
     hasInternetConnection = false;
   }
   else {
@@ -663,7 +668,7 @@ void setup() {
     }
     else {
       hasInternetConnection = false;
-      configOverSerialPort();
+      //configOverSerialPort();
     }
 
   }
@@ -764,10 +769,11 @@ bool lastInternetConnectionCheckTime = 0;
 
 void loop() {
   // TESTING: fill the queue with some random zap amounts
-  // for (int i = 0; i < 3; i++) {
-  //   zapAmountsFlashQueue.push_back(getRandomNum(1,3));
-  // }
-  // delay(30000);
+  //for (int i = 0; i < 3; i++) {
+  //  int nnn = getRandomNum(2,6);    
+  //  zapAmountsFlashQueue.push_back(nnn);
+  //}
+  //delay(5000);
 
   nostrRelayManager.loop();
   nostrRelayManager.broadcastEvents();
