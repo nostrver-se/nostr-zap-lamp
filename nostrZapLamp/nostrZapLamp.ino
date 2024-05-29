@@ -6,14 +6,12 @@ String version = "0.1";
 
 String config_ssid = ""; // 'String config_ssid = "config_ssid";' / 'String config_ssid = "null";'
 String config_wifi_password = ""; // 'String config_wifi_password = "password";' / 'String config_wifi_password = "null";'
-// Override variables with your own values from this config file.
-#include "config.h"
+// @todo - Override variables with your own values from this config file.
+//#include "config.h"
 // Pubkey should be in hex format.
-String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix and Zaplamp
-//String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
-//String config_pubkey = "55f04590674f3648f4cdc9dc8ce32da2a282074cd0b020596ee033d12d385185"; // hex value NoGood
-//String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71, 55f04590674f3648f4cdc9dc8ce32da2a282074cd0b020596ee033d12d385185"; // Sebastix and NoGood
-String config_relay = "nos.lol, nostr.sebastix.dev";
+//String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix
+String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
+String config_relay = "nos.lol, relay.damus.io"; // You may define other relays here if you wish.
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                 END of variables                              //
@@ -107,7 +105,7 @@ void createZapEventRequest();
 void connectToNostrRelays();
 
 #define BUTTON_PIN 0 // change this to the pin your button is connected to
-define DOUBLE_TAP_DELAY 250 // delay for double tap in milliseconds
+#define DOUBLE_TAP_DELAY 250 // delay for double tap in milliseconds
 
 volatile unsigned long lastButtonPress = 0;
 volatile bool doubleTapDetected = false;
@@ -778,8 +776,8 @@ void loop() {
   nostrRelayManager.loop();
   nostrRelayManager.broadcastEvents();
 
-  // reboot every hour
-  if (millis() > 3600000) {
+  // reboot third hour
+  if (millis() > (3600000 * 3) {
     Serial.println("Rebooting");
     ESP.restart();
   }
