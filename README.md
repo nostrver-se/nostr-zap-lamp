@@ -39,7 +39,7 @@ The number of flashes corresponds to the number of digits in the number of sats 
 
 ## Firmware Upload Instructions
 
-+ Use the web installer at https://lamp.600.wtf/ to flash and configure the device
++ Use the web installer at https://nostr-zap-lamp.lnbits.com/ to flash and configure the device
 + Alternatively, use the Arduino IDE to flash the firmware.
     - Install the ESP32 board in the Arduino IDE by adding the following URL to the board manager: https://dl.espressif.com/dl/package_esp32_index.json
     - Install the following libraries using the Arduino IDE library manager:
@@ -52,5 +52,22 @@ The number of flashes corresponds to the number of digits in the number of sats 
     - Open the nostrZapLamp.ino file in the Arduino IDE
     - Select the ESP32 Dev Module board and the correct port
     - Compile and upload the firmware
-    - Use the web installer at https://lamp.600.wtf/ to configure the device
+    - Use the web installer at https://nostr-zap-lamp.lnbits.com/ to configure the device
         
+## 5v Relay option
+
+Using a 5v Relay the lamp will be brighter, or you can swap out the light and connect anything to the relay that you want to turn on.
+
+ESP32 GND <==========================> Relay "DC-"
+
+ESP32 5V <==========================> Relay "DC+"
+
+LED POS <===========================> Relay "DC+"
+
+ESP32 GND <=========================> Relay "COM"
+
+LED GND <===========================> Relay "NO"
+
+GPIO 13 <===========================> Relay "S"
+
+<img src="https://github.com/lnbits/nostr-zap-lamp/assets/33088785/7e265c4e-256c-49fb-a936-c3c6ccfa081b" style="width:300px">
