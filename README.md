@@ -42,6 +42,7 @@ The number of flashes corresponds to the number of digits in the number of sats 
 + Use the web installer at https://nostr-zap-lamp.lnbits.com/ to flash and configure the device
 + Alternatively, use the Arduino IDE to flash the firmware.
     - Install the ESP32 board in the Arduino IDE by adding the following URL to the board manager: https://dl.espressif.com/dl/package_esp32_index.json
+    - Make sure to select version 2.0.x, otherwise the compile process will fail! ![](https://shares.sebastix.dev/4biPIpFd.png#cdd8e847d7a58476dfea236b26bbf4a1c13f26e179bd9b3c378573002593afe1)
     - Install the following libraries using the Arduino IDE library manager:
         - uBitcoin
         - WebSockets
