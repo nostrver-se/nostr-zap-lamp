@@ -9,8 +9,8 @@ String config_wifi_password = ""; // 'String config_wifi_password = "password";'
 // @todo - Override variables with your own values from this config file.
 //#include "config.h"
 // Pubkey should be in hex format.
-//String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix
-String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
+String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix
+//String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
 String config_relay = "nos.lol, relay.damus.io"; // You may define other relays here if you wish.
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -777,7 +777,7 @@ void loop() {
   nostrRelayManager.broadcastEvents();
 
   // reboot third hour
-  if (millis() > (3600000 * 3) {
+  if (millis() > (3600000 * 3)) {
     Serial.println("Rebooting");
     ESP.restart();
   }
