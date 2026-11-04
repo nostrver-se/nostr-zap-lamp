@@ -8,3 +8,4 @@ pcb/*.lck
 pcb/NostrZapLamp-backups
 build
 firmware
+.idea

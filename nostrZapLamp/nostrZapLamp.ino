@@ -4,14 +4,19 @@
 
 String version = "0.1";
 
+// @todo - Override variables with your own values from this config file.
+#include "config.h"
+
+// Fallback defaults, used only when config.h is not included above.
+// config.h defines NOSTRZAPLAMP_CONFIG_H, so these are skipped when it is used.
+#ifndef NOSTRZAPLAMP_CONFIG_H
 String config_ssid = ""; // 'String config_ssid = "config_ssid";' / 'String config_ssid = "null";'
 String config_wifi_password = ""; // 'String config_wifi_password = "password";' / 'String config_wifi_password = "null";'
-// @todo - Override variables with your own values from this config file.
-//#include "config.h"
+#endif
 // Pubkey should be in hex format.
 String config_pubkey = "06639a386c9c1014217622ccbcf40908c4f1a0c33e23f8d6d68f4abf655f8f71"; // hex value Sebastix
 //String config_pubkey = "9a470d841f9aa3f87891cd76a2e14a3441d015dbd8fc2b270b5ac8a9d9566e85"; // hex value ZapLamp
-String config_relay = "nos.lol, relay.damus.io"; // You may define other relays here if you wish.
+String config_relay = "nos.lol, relay.ditto.pub"; // You may define other relays here if you wish.
 
 ///////////////////////////////////////////////////////////////////////////////////
 //                                 END of variables                              //
